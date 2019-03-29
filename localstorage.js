@@ -9,6 +9,7 @@ window.addEventListener("load",function(){
   var inputpunitario = document.getElementById("inputUnitario");
   var buttonagregar = document.getElementById("buttonAgregar");
   var tabla = document.getElementById("tabla");
+  
 
   // creando el modelo de un objeto factura que sera usado en el localstorage
   var factura={
@@ -48,16 +49,32 @@ window.addEventListener("load",function(){
       puni.innerHTML=factura.productos[i].punitario;
       let pto = document.createElement("td");
       pto.innerHTML = factura.productos[i].pstotal;
+      var boton = document.createElement("button");
+      boton.innerHTML="Borrar";
+      boton.setAttribute("pos",i+1);
+      boton.addEventListener("click",function(evento){
+        let posicion=evento.target.getAttribute("pos");
+        factura.productos.splice(posicion-1,1)
+        localStorage.setItem("factura",JSON.stringify(factura));
+        window.location.reload();
+      });
 
       tr.appendChild(nro);
       tr.appendChild(ncant);
       tr.appendChild(descri);
       tr.appendChild(puni);
       tr.appendChild(pto);
+      tr.appendChild(boton);
 
       tabla.appendChild(tr);
+
     }
   };
+  var botonn = document.getElementById("botonn")
+  function eliminarfila(){
+    for (let i = 0; i < factura.productos.length; i++);
+    botonn
+   }
 
   // evento click del programa
   buttonagregar.addEventListener("click",function(){
@@ -90,11 +107,16 @@ window.addEventListener("load",function(){
     let PTotal=document.createElement("td");
     PTotal.innerHTML=detalle.pstotal;
 
+    let boton = document.createElement("button");
+    boton.id="botonn"
+    boton.innerHTML="Borrar";
+
     tr.appendChild(Nro);
     tr.appendChild(Cant);
     tr.appendChild(Descrip);
     tr.appendChild(PUnitario);
     tr.appendChild(PTotal);
+    tr.appendChild(boton);
 
     tabla.appendChild(tr);
 
@@ -103,6 +125,11 @@ window.addEventListener("load",function(){
     localStorage.setItem("factura", JSON.stringify(factura));
   });
 
+  // console.log(botonn);
+
+
   ConstruirFactura();
+
+
 
 });
